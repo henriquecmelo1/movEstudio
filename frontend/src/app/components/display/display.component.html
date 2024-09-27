@@ -1,1 +1,33 @@
-<p>display works!</p>
+
+
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>CPF</th>
+            <th>Nome</th>
+            <th>Data de Nascimento</th>
+            <th>Celular</th>
+            <th>Dia de Pagamento</th>
+            <th>Valor do Pagamento</th>
+            <th>Frequência</th>
+            <th>Consultas</th>
+            <th>Contato de Emergência</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let student of students">
+            <td>{{ student.cpf }}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.birthday }}</td>
+            <td>{{ student.cellphone }}</td>
+            <td>{{ student.payment_day }}</td>
+            <td>{{ student.payment_value }}</td>
+            <td>{{ student.frequency }}</td>
+            <td>{{ student.appointments }}</td>
+            <td>{{ student.emergency_contact }}</td>
+        </tr>
+
+</table>
+
