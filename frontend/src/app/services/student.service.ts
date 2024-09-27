@@ -17,4 +17,9 @@ export class StudentService {
   getStudents(){
     return this.http.get(this.url);
   }
+
+  filterStudents(search: string){
+    return this.http.get(this.url + '?search=' + search);
+  }
+
 }

@@ -29,12 +29,12 @@ export class FormsComponent implements OnInit {
     this.userForm = this.fb.group({
       cpf: ['', [Validators.required, Validators.pattern('[0-9]{11}')]],
       name: ['', Validators.required],
-      birthday: ['', Validators.required],
+      birthday: [''],
       cellphone: ['', [Validators.required, Validators.pattern('[0-9]{11}')]],
-      payment_day: ['', [Validators.required, Validators.min(1), Validators.max(31)]],
-      payment_value: ['', Validators.required],
-      frequency: ['', [Validators.required, Validators.min(1)]],
-      appointments: ['', Validators.required],
+      payment_day: ['', [Validators.min(1), Validators.max(31)]],
+      payment_value: [''],
+      frequency: ['',  Validators.min(1)],
+      appointments: [''],
       emergency_contact: ['']
     });
   };

@@ -11,3 +11,11 @@ def create_student(db: Session, student: StudentCreate):
 
 def get_all_students(db: Session):
     return db.query(StudentModel).all()
+
+def search_students(db: Session, search: str):
+    search = f"%{search}%"
+    return db.query(StudentModel).filter(
+        (StudentModel.cpf.like(search)) |
+        (StudentModel.name.like(search)) |
+        (StudentModel.cellphone.like(search))
+    ).all()
