@@ -17,7 +17,7 @@ export class DisplayComponent implements OnInit {
 
   ngOnInit() {
     this.studentService.getStudents().subscribe((data: any) => {
-      this.students = data['students'];
+      this.students = data;
     });
   }
 
