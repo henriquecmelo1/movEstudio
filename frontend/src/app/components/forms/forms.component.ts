@@ -37,10 +37,26 @@ export class FormsComponent implements OnInit {
       appointments: [''],
       emergency_contact: ['']
     });
+
+    // birthday default value
+    const today = new Date().toISOString().split('T')[0];
+    this.userForm.patchValue({ birthday: today });
+
+    // payment_day default value
+    this.userForm.patchValue({ payment_day: 1 });
+
+    // payment_value default value
+    this.userForm.patchValue({ payment_value: 0 });
+
+    // frequency default value
+    this.userForm.patchValue({ frequency: 1 });
+
+    
   };
 
 
   onSubmit(form: any) {
+    console.log(form.value)
     if (form.valid) {
       this.studentService.createStudent(form.value).subscribe(response => {
         console.log('Student created successfully', response);

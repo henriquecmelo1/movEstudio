@@ -19,3 +19,9 @@ def search_students(db: Session, search: str):
         (StudentModel.name.like(search)) |
         (StudentModel.cellphone.like(search))
     ).all()
+
+def delete_student(db: Session, student_cpf: str):
+    db.query(StudentModel).filter(StudentModel.cpf == student_cpf).delete()
+    db.commit()
+    return {"message": "Student deleted successfully"}
+

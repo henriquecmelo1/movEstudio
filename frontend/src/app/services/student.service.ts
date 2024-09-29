@@ -22,4 +22,7 @@ export class StudentService {
     return this.http.get(this.url + '?search=' + search);
   }
 
+  deleteStudent(id: any){
+    return this.http.delete(this.url + id);
+  }
 }

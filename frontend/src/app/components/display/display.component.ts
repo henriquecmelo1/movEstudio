@@ -28,5 +28,11 @@ export class DisplayComponent implements OnInit {
       this.students = data;
     });
   }
+  deleteStudent(id: any) {
+    this.studentService.deleteStudent(id).subscribe((data: any) => {
+      this.students = data;
+      window.location.reload();
+    });
+  }
 
 }
