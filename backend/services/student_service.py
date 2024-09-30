@@ -25,3 +25,8 @@ def delete_student(db: Session, student_cpf: str):
     db.commit()
     return {"message": "Student deleted successfully"}
 
+def update_student(db: Session, student_cpf: str, student: StudentCreate):
+    db.query(StudentModel).filter(StudentModel.cpf == student_cpf).update(student.dict())
+    db.commit()
+    return {"message": "Student updated successfully"}
+

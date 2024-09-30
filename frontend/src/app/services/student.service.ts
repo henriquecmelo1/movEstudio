@@ -25,4 +25,8 @@ export class StudentService {
   deleteStudent(id: any){
     return this.http.delete(this.url + id);
   }
+
+  updateStudent(student: any){
+    return this.http.put(this.url + student.cpf, student);
+  }
 }

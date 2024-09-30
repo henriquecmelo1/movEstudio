@@ -1,7 +1,8 @@
-<form class="d-flex" role="search" (ngSubmit)="onSubmit()">
-    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="search" name="search">
-    <button class="btn btn-outline-success" type="submit" >Search</button>
-  </form>
+<form class="d-flex" role="search" (ngSubmit)="onSubmitSearch()">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="search"
+        name="search">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
 
 <table class="table table-striped">
 
@@ -31,10 +32,80 @@
             <td>{{ student.appointments }}</td>
             <td>{{ student.emergency_contact }}</td>
 
-            
-                <!-- <button class="btn btn-primary" (click)="editStudent(student)">Editar</button> -->
+
+            <td><a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editStudentModal" (click)="openEditModal(student)">Editar</a></td>
             <td><button class="btn btn-danger" (click)="deleteStudent(student.cpf)">Deletar</button></td>
         </tr>
 
 </table>
 
+
+<!--  <a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal"> Watch Trailer</a> &nbsp; -->
+
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Aluno</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editStudentModalLabel">Editar Aluno</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="editStudentForm" (ngSubmit)="editStudent()">
+            <div class="mb-3">
+              <label for="name" class="form-label">Nome</label>
+              <input type="text" class="form-control" id="name" formControlName="name">
+            </div>
+            <div class="mb-3">
+              <label for="birthday" class="form-label">Data de Nascimento</label>
+              <input type="date" class="form-control" id="birthday" formControlName="birthday">
+            </div>
+            <div class="mb-3">
+              <label for="cellphone" class="form-label">Celular</label>
+              <input type="text" class="form-control" id="cellphone" formControlName="cellphone">
+            </div>
+            <div class="mb-3">
+              <label for="payment_day" class="form-label">Dia de Pagamento</label>
+              <input type="number" class="form-control" id="payment_day" formControlName="payment_day">
+            </div>
+            <div class="mb-3">
+              <label for="payment_value" class="form-label">Valor do Pagamento</label>
+              <input type="number" class="form-control" id="payment_value" formControlName="payment_value">
+            </div>
+            <div class="mb-3">
+              <label for="frequency" class="form-label">Frequência</label>
+              <input type="number" class="form-control" id="frequency" formControlName="frequency">
+            </div>
+            <div class="mb-3">
+              <label for="appointments" class="form-label">Compromissos</label>
+              <input type="number" class="form-control" id="appointments" formControlName="appointments">
+            </div>
+            <div class="mb-3">
+              <label for="emergency_contact" class="form-label">Contato de Emergência</label>
+              <input type="text" class="form-control" id="emergency_contact" formControlName="emergency_contact">
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+        
