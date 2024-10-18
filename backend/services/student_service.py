@@ -1,32 +1,28 @@
-from sqlalchemy.orm import Session
-from models.studentModel import StudentModel
-from schemas.studentSchema import StudentCreate
+from db.database import collection
+from schemas.studentSchema import serializer_students_list
 
-def create_student(db: Session, student: StudentCreate):
-    db_student = StudentModel(**student.dict())
-    db.add(db_student)
-    db.commit()
-    db.refresh(db_student)
-    return db_student
+#------------GET---------------
+def get_all_students():
+    return serializer_students_list(collection.find())
 
-def get_all_students(db: Session):
-    return db.query(StudentModel).all()
+def search_students(search: str):
+    return serializer_students_list(collection.find({
+        "$or": [
+            {"cpf": {"$regex": search, "$options": "i"}},
+            {"name": {"$regex": search, "$options": "i"}},
+            {"cellphone": {"$regex": search, "$options": "i"}}
+        ]
+    }))
 
-def search_students(db: Session, search: str):
-    search = f"%{search}%"
-    return db.query(StudentModel).filter(
-        (StudentModel.cpf.like(search)) |
-        (StudentModel.name.like(search)) |
-        (StudentModel.cellphone.like(search))
-    ).all()
+#------------POST---------------
+def create_student(student: dict):
+    collection.insert_one(student)
 
-def delete_student(db: Session, student_cpf: str):
-    db.query(StudentModel).filter(StudentModel.cpf == student_cpf).delete()
-    db.commit()
-    return {"message": "Student deleted successfully"}
+#------------PUT---------------
+def update_student(cpf: str, student: dict):
+    collection.update_one({"cpf": cpf}, {"$set": student})
 
-def update_student(db: Session, student_cpf: str, student: StudentCreate):
-    db.query(StudentModel).filter(StudentModel.cpf == student_cpf).update(student.dict())
-    db.commit()
-    return {"message": "Student updated successfully"}
+#------------DELETE---------------
+def delete_student(cpf: str):
+    collection.delete_one({"cpf": cpf})
 

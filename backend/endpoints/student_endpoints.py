@@ -1,26 +1,30 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy.orm import Session
-from schemas.studentSchema import StudentCreate, Student
-from services.student_service import create_student, get_all_students, search_students, delete_student, update_student
-from db.session import get_db
+from fastapi import APIRouter
+from models.studentModel import StudentModel
+from services.student_service import search_students, get_all_students, create_student, update_student, delete_student
+
 
 router = APIRouter()
 
-@router.post("/", response_model=Student)
-def create_new_student(student: StudentCreate, db: Session = Depends(get_db)):
-    return create_student(db=db, student=student)
-
-
-@router.get("/", response_model=list[Student])
-def read_students(search: str = Query(None), db: Session = Depends(get_db)):
+@router.get("/", response_model=list[StudentModel])
+async def get_students_endpoint(search: str = None):
     if search:
-        return search_students(db=db, search=search)
-    return get_all_students(db=db)
+        return search_students(search)
+    return get_all_students()
 
-@router.delete("/{cpf}")
-def delete_student_by_cpf(cpf: str, db: Session = Depends(get_db)):
-    return delete_student(db=db, student_cpf=cpf)
+@router.post("/")
+async def create_student_endpoint(student: StudentModel):
+    return create_student(dict(student))
 
 @router.put("/{cpf}")
-def update_student_by_cpf(cpf: str, student: StudentCreate, db: Session = Depends(get_db)):
-    return update_student(db=db, student_cpf=cpf, student=student)
+async def update_student_endpoint(cpf: str, student: StudentModel):
+    return update_student(cpf, dict(student))
+
+@router.delete("/{cpf}")
+async def delete_student_endpoint(cpf: str):
+    return delete_student(cpf)
+
+
+
+
+
+

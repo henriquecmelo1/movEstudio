@@ -1,13 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from db.base import Base
-from db.session import engine
-from endpoints import student_endpoints
-
-
-Base.metadata.create_all(bind=engine)
+from endpoints.student_endpoints import router
 
 app = FastAPI()
+
+app.include_router(router, prefix="/students")
 
 app.add_middleware(
     CORSMiddleware,
@@ -17,4 +14,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(student_endpoints.router, prefix="/students")
+
