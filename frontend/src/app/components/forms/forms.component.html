@@ -5,94 +5,122 @@
                 <legend>Por favor, preencha as informações do aluno:</legend>
                 <hr>
 
-                
+
                 <div class="mb-3">
                     <label for="cpf" class="form-label">CPF *</label>
-                    <input type="text" class="form-control" id="cpf" placeholder="Ex: 12345678910" formControlName="cpf">
+                    <input type="text" class="form-control" id="cpf" placeholder="Ex: 12345678910"
+                        formControlName="cpf">
                     <div class="text-danger" *ngIf="userForm.get('cpf')?.invalid && userForm.get('cpf')?.touched">
                         <div *ngIf="userForm.get('cpf')?.errors?.['required']">CPF é obrigatório</div>
                         <div *ngIf="userForm.get('cpf')?.errors?.['pattern']">CPF inválido</div>
                     </div>
                 </div>
 
-                
+
                 <div class="mb-3">
                     <label for="name" class="form-label">Nome *</label>
-                    <input type="text" class="form-control" id="name" placeholder="Nome do aluno" formControlName="name">
+                    <input type="text" class="form-control" id="name" placeholder="Nome do aluno"
+                        formControlName="name">
                     <div class="text-danger" *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
                         <div *ngIf="userForm.get('name')?.errors?.['required']">Nome é obrigatório</div>
                     </div>
                 </div>
 
-                
+
                 <div class="mb-3">
                     <label for="birthday" class="form-label">Data de Nascimento</label>
                     <input type="date" class="form-control" id="birthday" formControlName="birthday">
-                    <div class="text-danger" *ngIf="userForm.get('birthday')?.invalid && userForm.get('birthday')?.touched">
-                        <div *ngIf="userForm.get('birthday')?.errors?.['required']">Data de nascimento é obrigatória</div>
+                    <div class="text-danger"
+                        *ngIf="userForm.get('birthday')?.invalid && userForm.get('birthday')?.touched">
+                        <div *ngIf="userForm.get('birthday')?.errors?.['required']">Data de nascimento é obrigatória
+                        </div>
                     </div>
                 </div>
 
-                
+
                 <div class="mb-3">
                     <label for="cellphone" class="form-label">Celular *</label>
-                    <input type="text" class="form-control" id="cellphone" placeholder="Ex: 99999999999" formControlName="cellphone">
-                    <div class="text-danger" *ngIf="userForm.get('cellphone')?.invalid && userForm.get('cellphone')?.touched">
+                    <input type="text" class="form-control" id="cellphone" placeholder="Ex: 99999999999"
+                        formControlName="cellphone">
+                    <div class="text-danger"
+                        *ngIf="userForm.get('cellphone')?.invalid && userForm.get('cellphone')?.touched">
                         <div *ngIf="userForm.get('cellphone')?.errors?.['required']">Celular é obrigatório</div>
                         <div *ngIf="userForm.get('cellphone')?.errors?.['pattern']">Número de celular inválido</div>
                     </div>
                 </div>
 
-                
+
                 <div class="mb-3">
                     <label for="payment_day" class="form-label">Dia de Pagamento</label>
-                    <input type="number" class="form-control" id="payment_day" placeholder="Ex: 15" formControlName="payment_day">
-                    <div class="text-danger" *ngIf="userForm.get('payment_day')?.invalid && userForm.get('payment_day')?.touched">
-                        <div *ngIf="userForm.get('payment_day')?.errors?.['required']">Dia de pagamento é obrigatório</div>
-                        <div *ngIf="userForm.get('payment_day')?.errors?.['min'] || userForm.get('payment_day')?.errors?.['max']">
+                    <input type="number" class="form-control" id="payment_day" placeholder="Ex: 15"
+                        formControlName="payment_day">
+                    <div class="text-danger"
+                        *ngIf="userForm.get('payment_day')?.invalid && userForm.get('payment_day')?.touched">
+                        <div *ngIf="userForm.get('payment_day')?.errors?.['required']">Dia de pagamento é obrigatório
+                        </div>
+                        <div
+                            *ngIf="userForm.get('payment_day')?.errors?.['min'] || userForm.get('payment_day')?.errors?.['max']">
                             Dia de pagamento inválido
                         </div>
                     </div>
                 </div>
 
-                
+
                 <div class="mb-3">
                     <label for="payment_value" class="form-label">Valor do Pagamento</label>
-                    <input type="number" class="form-control" id="payment_value" placeholder="Ex: 1500.50" formControlName="payment_value">
-                    <div class="text-danger" *ngIf="userForm.get('payment_value')?.invalid && userForm.get('payment_value')?.touched">
-                        <div *ngIf="userForm.get('payment_value')?.errors?.['required']">Valor do pagamento é obrigatório</div>
+                    <input type="number" class="form-control" id="payment_value" placeholder="Ex: 1500.50"
+                        formControlName="payment_value">
+                    <div class="text-danger"
+                        *ngIf="userForm.get('payment_value')?.invalid && userForm.get('payment_value')?.touched">
+                        <div *ngIf="userForm.get('payment_value')?.errors?.['required']">Valor do pagamento é
+                            obrigatório</div>
                     </div>
                 </div>
 
-                
+
                 <div class="mb-3">
                     <label for="frequency" class="form-label">Frequência</label>
-                    <input type="number" class="form-control" id="frequency" placeholder="Ex: 30" formControlName="frequency">
-                    <div class="text-danger" *ngIf="userForm.get('frequency')?.invalid && userForm.get('frequency')?.touched">
+                    <input type="number" class="form-control" id="frequency" placeholder="Ex: 30"
+                        formControlName="frequency" (input)="onFrequencyChange()">
+                    <div class="text-danger"
+                        *ngIf="userForm.get('frequency')?.invalid && userForm.get('frequency')?.touched">
                         <div *ngIf="userForm.get('frequency')?.errors?.['required']">Frequência é obrigatória</div>
                         <div *ngIf="userForm.get('frequency')?.errors?.['min']">Frequência inválida</div>
                     </div>
                 </div>
 
-                
-                <div class="mb-3">
-                    <label for="appointments" class="form-label">Horários</label>
-                    <textarea class="form-control" id="appointments" placeholder="Descreva seus compromissos" formControlName="appointments"></textarea>
-                    <div class="text-danger" *ngIf="userForm.get('appointments')?.invalid && userForm.get('appointments')?.touched">
-                        <div *ngIf="userForm.get('appointments')?.errors?.['required']">Compromissos são obrigatórios</div>
-                    </div>
+                <div formArrayName="appointment_day" *ngFor="let dayControl of appointmentDays.controls; let i = index">
+                    <label>Appointment Day {{ i + 1 }}:</label>
+                    <select class="form-select" [formControlName]="i">
+                        <option value="Segunda-Feira">Segunda-feira</option>
+                        <option value="Terça-Feira">Terça-feira</option>
+                        <option value="Quarta-Feira">Quarta-feira</option>
+                        <option value="Quinta-Feira">Quinta-feira</option>
+                        <option value="Sexta-Feira">Sexta-feira</option>
+                    </select>
                 </div>
 
-                
+                <div formArrayName="appointment_time" *ngFor="let timeControl of appointmentTimes.controls; let i = index">
+                    <label>Appointment Time {{ i + 1 }}: </label><br>
+                    <input [formControlName]="i" type="time" />
+                </div>
+
+
+
+
+
                 <div class="mb-3">
                     <label for="emergency_contact" class="form-label">Contato de Emergência</label>
-                    <input type="text" class="form-control" id="emergency_contact" placeholder="Ex: Nome do contato" formControlName="emergency_contact">
-                    <div class="text-danger" *ngIf="userForm.get('emergency_contact')?.invalid && userForm.get('emergency_contact')?.touched">
-                        <div *ngIf="userForm.get('emergency_contact')?.errors?.['required']">Contato de emergência é obrigatório</div>
+                    <input type="text" class="form-control" id="emergency_contact" placeholder="Ex: Nome do contato"
+                        formControlName="emergency_contact">
+                    <div class="text-danger"
+                        *ngIf="userForm.get('emergency_contact')?.invalid && userForm.get('emergency_contact')?.touched">
+                        <div *ngIf="userForm.get('emergency_contact')?.errors?.['required']">Contato de emergência é
+                            obrigatório</div>
                     </div>
                 </div>
 
-                
+
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">
                         <i class="bi bi-send"></i> Enviar Informações
