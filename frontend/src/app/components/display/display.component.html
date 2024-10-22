@@ -10,13 +10,7 @@
         <tr>
             <th>CPF</th>
             <th>Nome</th>
-            <th>Data de Nascimento</th>
             <th>Celular</th>
-            <th>Dia de Pagamento</th>
-            <th>Valor do Pagamento</th>
-            <th>Frequência</th>
-            <th>Consultas</th>
-            <th>Contato de Emergência</th>
         </tr>
     </thead>
 
@@ -24,14 +18,9 @@
         <tr *ngFor="let student of students">
             <td>{{ student.cpf }}</td>
             <td>{{ student.name }}</td>
-            <td>{{ student.birthday }}</td>
             <td>{{ student.cellphone }}</td>
-            <td>{{ student.payment_day }}</td>
-            <td>{{ student.payment_value }}</td>
-            <td>{{ student.frequency }}</td>
-            <td>{{ student.appointments }}</td>
-            <td>{{ student.emergency_contact }}</td>
 
+            <td><a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#openDetailsModal" (click)="openDetailsModal(student)">Detalhes</a></td>
 
             <td><a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editStudentModal" (click)="openEditModal(student)">Editar</a></td>
             <td><button class="btn btn-danger" (click)="deleteStudent(student.cpf)">Deletar</button></td>
@@ -40,25 +29,7 @@
 </table>
 
 
-<!--  <a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal"> Watch Trailer</a> &nbsp; -->
-
-<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Aluno</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-            </div>
-        </div>
-    </div>
-</div> -->
-
+<!-- EDIT MODAL -->
 <div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -68,38 +39,123 @@
         </div>
         <div class="modal-body">
           <form [formGroup]="editStudentForm" (ngSubmit)="editStudent()">
+            
             <div class="mb-3">
-              <label for="name" class="form-label">Nome</label>
-              <input type="text" class="form-control" id="name" formControlName="name">
-            </div>
-            <div class="mb-3">
+              <label for="cpf" class="form-label">CPF *</label>
+              <input type="text" class="form-control" id="cpf" placeholder="Ex: 12345678910"
+                  formControlName="cpf">
+              <div class="text-danger" *ngIf="editStudentForm.get('cpf')?.invalid && editStudentForm.get('cpf')?.touched">
+                  <div *ngIf="editStudentForm.get('cpf')?.errors?.['required']">CPF é obrigatório</div>
+                  <div *ngIf="editStudentForm.get('cpf')?.errors?.['pattern']">CPF inválido</div>
+              </div>
+          </div>
+
+
+          <div class="mb-3">
+              <label for="name" class="form-label">Nome *</label>
+              <input type="text" class="form-control" id="name" placeholder="Nome do aluno"
+                  formControlName="name">
+              <div class="text-danger" *ngIf="editStudentForm.get('name')?.invalid && editStudentForm.get('name')?.touched">
+                  <div *ngIf="editStudentForm.get('name')?.errors?.['required']">Nome é obrigatório</div>
+              </div>
+          </div>
+
+
+          <div class="mb-3">
               <label for="birthday" class="form-label">Data de Nascimento</label>
               <input type="date" class="form-control" id="birthday" formControlName="birthday">
-            </div>
-            <div class="mb-3">
-              <label for="cellphone" class="form-label">Celular</label>
-              <input type="text" class="form-control" id="cellphone" formControlName="cellphone">
-            </div>
-            <div class="mb-3">
+              <div class="text-danger"
+                  *ngIf="editStudentForm.get('birthday')?.invalid && editStudentForm.get('birthday')?.touched">
+                  <div *ngIf="editStudentForm.get('birthday')?.errors?.['required']">Data de nascimento é obrigatória
+                  </div>
+              </div>
+          </div>
+
+
+          <div class="mb-3">
+              <label for="cellphone" class="form-label">Celular *</label>
+              <input type="text" class="form-control" id="cellphone" placeholder="Ex: 99999999999"
+                  formControlName="cellphone">
+              <div class="text-danger"
+                  *ngIf="editStudentForm.get('cellphone')?.invalid && editStudentForm.get('cellphone')?.touched">
+                  <div *ngIf="editStudentForm.get('cellphone')?.errors?.['required']">Celular é obrigatório</div>
+                  <div *ngIf="editStudentForm.get('cellphone')?.errors?.['pattern']">Número de celular inválido</div>
+              </div>
+          </div>
+
+
+          <div class="mb-3">
               <label for="payment_day" class="form-label">Dia de Pagamento</label>
-              <input type="number" class="form-control" id="payment_day" formControlName="payment_day">
-            </div>
-            <div class="mb-3">
+              <input type="number" class="form-control" id="payment_day" placeholder="Ex: 15"
+                  formControlName="payment_day">
+              <div class="text-danger"
+                  *ngIf="editStudentForm.get('payment_day')?.invalid && editStudentForm.get('payment_day')?.touched">
+                  <div *ngIf="editStudentForm.get('payment_day')?.errors?.['required']">Dia de pagamento é obrigatório
+                  </div>
+                  <div
+                      *ngIf="editStudentForm.get('payment_day')?.errors?.['min'] || editStudentForm.get('payment_day')?.errors?.['max']">
+                      Dia de pagamento inválido
+                  </div>
+              </div>
+          </div>
+
+
+          <div class="mb-3">
               <label for="payment_value" class="form-label">Valor do Pagamento</label>
-              <input type="number" class="form-control" id="payment_value" formControlName="payment_value">
-            </div>
-            <div class="mb-3">
+              <input type="number" class="form-control" id="payment_value" placeholder="Ex: 1500.50"
+                  formControlName="payment_value">
+              <div class="text-danger"
+                  *ngIf="editStudentForm.get('payment_value')?.invalid && editStudentForm.get('payment_value')?.touched">
+                  <div *ngIf="editStudentForm.get('payment_value')?.errors?.['required']">Valor do pagamento é
+                      obrigatório</div>
+              </div>
+          </div>
+
+
+          <div class="mb-3">
               <label for="frequency" class="form-label">Frequência</label>
-              <input type="number" class="form-control" id="frequency" formControlName="frequency">
-            </div>
-            <div class="mb-3">
-              <label for="appointments" class="form-label">Consultas</label>
-              <input type="text" class="form-control" id="appointments" formControlName="appointments">
-            </div>
-            <div class="mb-3">
+              <input type="number" class="form-control" id="frequency" placeholder="Ex: 30"
+                  formControlName="frequency" (input)="onFrequencyChange()">
+              <div class="text-danger"
+                  *ngIf="editStudentForm.get('frequency')?.invalid && editStudentForm.get('frequency')?.touched">
+                  <div *ngIf="editStudentForm.get('frequency')?.errors?.['required']">Frequência é obrigatória</div>
+                  <div *ngIf="editStudentForm.get('frequency')?.errors?.['min']">Frequência inválida</div>
+              </div>
+          </div>
+
+          <div formArrayName="appointment_day" *ngFor="let dayControl of appointmentDays.controls; let i = index">
+              <label>Appointment Day {{ i + 1 }}:</label>
+              <select class="form-select" [formControlName]="i">
+                  <option value="Segunda-Feira">Segunda-feira</option>
+                  <option value="Terça-Feira">Terça-feira</option>
+                  <option value="Quarta-Feira">Quarta-feira</option>
+                  <option value="Quinta-Feira">Quinta-feira</option>
+                  <option value="Sexta-Feira">Sexta-feira</option>
+              </select>
+          </div>
+
+          <div formArrayName="appointment_time" *ngFor="let timeControl of appointmentTimes.controls; let i = index">
+              <label>Appointment Time {{ i + 1 }}: </label><br>
+              <input [formControlName]="i" type="time" />
+          </div>
+
+
+
+
+
+          <div class="mb-3">
               <label for="emergency_contact" class="form-label">Contato de Emergência</label>
-              <input type="text" class="form-control" id="emergency_contact" formControlName="emergency_contact">
-            </div>
+              <input type="text" class="form-control" id="emergency_contact" placeholder="Ex: Nome do contato"
+                  formControlName="emergency_contact">
+              <div class="text-danger"
+                  *ngIf="editStudentForm.get('emergency_contact')?.invalid && editStudentForm.get('emergency_contact')?.touched">
+                  <div *ngIf="editStudentForm.get('emergency_contact')?.errors?.['required']">Contato de emergência é
+                      obrigatório</div>
+              </div>
+          </div>
+
+
+
             <button type="submit" class="btn btn-primary">Salvar</button>
           </form>
         </div>
@@ -108,4 +164,28 @@
   </div>
 
 
-        
+<!-- DETAILS MODAL -->
+<div class="modal fade" id="openDetailsModal" tabindex="-2" aria-labelledby="openDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="openDetailsModalLabel">Detalhes do Aluno</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+
+          <p>Nome: {{currentStudent.name}}</p>
+          <p>Data de Nascimento: {{currentStudent.birthday}}</p>
+          <p>Celular: {{currentStudent.cellphone}}</p>
+          <p>Dia de Pagamento: {{currentStudent.payment_day}}</p>
+          <p>Valor do Pagamento: {{currentStudent.payment_value}}</p>
+          <p>Frequência: {{currentStudent.frequency}}</p>
+          <p>Dias de Aula: {{currentStudent.appointment_day}}</p>
+          <p>Horário de Aula: {{currentStudent.appointment_time}}</p>
+          <p>Contato de Emergência: {{currentStudent.emergency_contact}}</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
